@@ -1,12 +1,10 @@
 # detect ArUco Marker using OpenCV
 # source: https://mecaruco2.readthedocs.io/en/latest/notebooks_rst/Aruco/aruco_basics.html
 
-import numpy as np
-import cv2, PIL
+import cv2
 from cv2 import aruco
 import matplotlib.pyplot as plt
 import matplotlib as mpl
-import pandas as pd
 
 def generate_markers():
     aruco_dict = aruco.Dictionary_get(aruco.DICT_4X4_50)
@@ -23,7 +21,7 @@ def generate_markers():
     plt.show()
 
 def identify_markers():
-    frame = cv2.imread("imgs/img_1.png")
+    frame = cv2.imread("imgs/img_1.jpg")
     rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
     gray_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
@@ -42,5 +40,5 @@ def identify_markers():
 
 
 if __name__ == "__main__":
-    # generate_markers()
+    generate_markers()
     identify_markers()
