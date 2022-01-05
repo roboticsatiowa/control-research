@@ -11,7 +11,7 @@ All software in development. See [main repo](https://github.com/roboticsatiowa/U
 1. Map GPS waypoints
 2. "Implement differential GNSS for higher accuracy"?
 3. Find direct route between waypoints
-4. Online route modification given obstacle avoidance algorithm
+4. Online route modification given obstacle avoidance algorithm and detected marker location
 
 ### Obstacle Avoidance
 1. Simple "wall detection" using depth camera
@@ -22,7 +22,6 @@ All software in development. See [main repo](https://github.com/roboticsatiowa/U
 1. Detect marker in controlled environment
 2. Use object detection to find approximate location of marker (may not be necessary)
 3. Calculate distance to marker
-4. Online route modification given marker location
 
 ### ROS
 1. Control structure with all data streams
