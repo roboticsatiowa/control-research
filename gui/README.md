@@ -5,7 +5,7 @@
 2. Record data from camera, GPS, and science system
 3. Robot feedback
 
-### GUI Componets
+### GUI Components
 - [ ] Intel RealSense camera feed
 - [ ] USB camera feed(s)
 - [ ] Timer
@@ -15,3 +15,13 @@
 - [ ] Science readout
 - [ ] Robot systems feedback information
 - [ ] Data stream low latency mode for poor connections
+
+### ROS Communication
+#### Subscribers
+- RealSense camera (/realsense_camera_0/color/image_raw/compressed)
+- USB camera (/usb_camera_0/image_raw/compressed)
+- GPS
+- Robot systems feedback?
+
+#### Publishers
+- Mode
