@@ -22,7 +22,7 @@ sudo apt install ros-melodic-nmea-navsat-driver
 sudo chmod 666 /dev/ttyTHS1
 
 # run
-rosrun nmea_navsat_driver nmea_serial_driver _port:/dev/ttyTHS1 _baud:=9600
+rosrun nmea_navsat_driver nmea_serial_driver _port:=/dev/ttyTHS1 _baud:=9600
 ```
 
 # IMU
