@@ -9,3 +9,4 @@ src/CMakeLists.txt
 **.jpg
 **.swp
 **.swo
+**/ros_imu_bno055

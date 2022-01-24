@@ -1,0 +1,13 @@
+<launch>
+
+  <!-- launch gps -->
+  <include file="$(find nmea_navsat_driver)/launch/nmea_serial_driver.launch">
+    <arg name="port" default="/dev/ttyTHS1" />
+    <arg name="baud" default="9600" />
+    <arg name="frame_id" default="gps" />
+    <arg name="use_GNSS_time" default="False" />
+    <arg name="time_ref_source" default="gps" />
+    <arg name="useRMC" default="False" />
+  </include>
+
+</launch>
