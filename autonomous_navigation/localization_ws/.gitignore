@@ -1,0 +1,11 @@
+**/__pycache__/
+**/.DS_Store
+**/.pyc
+/build
+/devel
+*/include
+.catkin_workspace
+src/CMakeLists.txt
+**.jpg
+**.swp
+**.swo
