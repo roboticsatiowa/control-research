@@ -25,15 +25,20 @@ def main():
 			aruco_dict, 
 			parameters=parameters)
 
-		#frame_markers = aruco.drawDetectedMarkers(frame, corners, ids)
-		#cv2.imshow(name, frame_markers)
-
 		if ids is not None:
-			#print(ids)
 			for i in range(len(ids)):
 				c = corners[i][0]
-				#cv2.circle([c[:, 0].mean()], [c[:, 1].mean()], 20, (255, 0, 0), 2)
-				cv2.circle(frame, [c[:, 1].mean()], 20, (255, 0, 0), 2)
+				# place a circle over frame located in the center of the marker
+				# radius = 5, color = red, thickness = 10 (to make it solid)
+				circles_frame = cv2.circle(
+					frame, 
+					(int(c[:, 0].mean()), int(c[:, 1].mean())), 
+					5, 
+					(0, 0, 255), 
+					10
+				)
+				cv2.imshow(name, circles_frame)
+
 
 		if cv2.waitKey(1) == 27:
 			break
