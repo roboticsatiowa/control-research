@@ -37,3 +37,11 @@
 
 - Need tf for robot frame, camera, and map
 - Alternative plan: do breadth-first search on the world, optimal solution guaranteed!
+
+
+## Localization
+
+- Frame: 
+    - map -> odom -> base_link
+    - odom -> base_link: continuous senors
+    - map -> odom: discrete sensors
