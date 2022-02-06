@@ -17,8 +17,8 @@ import glob # Used to get retrieve files that have a specified pattern
 # Python version: 3.8
 
 # Chessboard dimensions
-number_of_squares_X = 6 # Number of chessboard squares along the x-axis
-number_of_squares_Y = 6  # Number of chessboard squares along the y-axis
+number_of_squares_X = 8 # Number of chessboard squares along the x-axis
+number_of_squares_Y = 8  # Number of chessboard squares along the y-axis
 nX = number_of_squares_X - 1 # Number of interior corners along x-axis
 nY = number_of_squares_Y - 1 # Number of interior corners along y-axis
 square_size = 0.015 # Size, in meters, of a square side
