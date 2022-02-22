@@ -63,24 +63,6 @@ class Window(QMainWindow):
         self.top_layout.addWidget(self.vid1)
         self.top_layout.addWidget(self.vid2)
 
-    def _create_mode_buttons(self):
-        # creating start button
-        self.start_button = QPushButton("Start", self)
-        #self.start_button.setGeometry(500, 530, 150, 50)
-        self.start_button.clicked.connect(self.start_action)
-        # creating pause button
-        self.pause_button = QPushButton("Pause", self)
-        #self.pause_button.setGeometry(325, 600, 150, 50)
-        self.pause_button.clicked.connect(self.pause_action)
-        # creating reset button
-        self.reset_button = QPushButton("Reset", self)
-        #self.reset_button.setGeometry(500, 600, 150, 50)
-        self.reset_button.clicked.connect(self.reset_action)
-
-        self.bottom_left_layout.addWidget(self.start_button)
-        self.bottom_left_layout.addWidget(self.pause_button)
-        self.bottom_left_layout.addWidget(self.reset_button)
-
     def _create_timer(self):
         self.label = QLabel("//TIMER//", self)
         self.label.setStyleSheet("border : 3px solid black")
