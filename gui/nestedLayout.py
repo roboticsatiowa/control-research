@@ -53,6 +53,7 @@ class Window(QMainWindow):
         self._create_modes()
         self._create_timer()
         self._create_timer_buttons()
+        self.create_timer()
 
     def _create_video_feeds(self):
         self.vid1 = QLabel(self) #realsense
@@ -217,6 +218,15 @@ class Window(QMainWindow):
             self.label.setText(str(second))
 
             self.label.setText(str(hrs)+":"+str(mins)+":"+str(second))
+
+
+    def create_timer(self):
+        timer = QTimer(self)
+        self.start = False
+        timer.timeout.connect(self.showTime)
+		# update the timer every tenth second
+        timer.start(100)
+
 
     def start_action(self):
 		# making flag true
