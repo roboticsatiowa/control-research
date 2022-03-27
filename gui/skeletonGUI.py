@@ -231,7 +231,7 @@ class Window(QMainWindow):
 
             self.label.setText(str(second))
 
-            # self.label.setText(str(hrs)+":"+str(mins)+":"+str(second))
+            self.label.setText(str(hrs)+":"+str(mins)+":"+str(second))
             #self.label.setText(str(second))
      #method to get latitude
     def getLatitude(self):

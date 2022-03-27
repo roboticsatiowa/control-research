@@ -7,6 +7,7 @@ from PyQt5.QtGui import QIcon, QPixmap
 from PyQt5.QtCore import *
 from urllib.request import urlopen, urlretrieve
 import sys
+import geopy
 
 #commit comment
 class Window(QMainWindow):
@@ -147,10 +148,10 @@ class Window(QMainWindow):
         self.gps_layout.addWidget(self.label3)
 
 
-    def getMapImage(self, lat, lng, zoom):
+    def getMapImage(self, lat1, lng1, lat2, lng2, zoom):
         urlbase = "http://maps.google.com/maps/api/staticmap?"
         GOOGLEAPIKEY = "AIzaSyCHD0L-s_gWE6VTNumgn1TMCEhiDTEok_U"
-        args = "center={},{}&zoom={}&size={}x{}&format=gif&maptype={}&markers=color:red|size:small|{},{}|".format(lat,lng,zoom,400,400,"hybrid",lat,lng)
+        args = "center={},{}&zoom={}&size={}x{}&format=gif&maptype={}&markers=color:red|size:small|{},{}|".format(lat,lng,zoom,400,400,"hybrid",lat1,lng1,lat2,lng2)
         args = args + "&key=" + GOOGLEAPIKEY
         mapURL = urlbase+args
         urlretrieve(mapURL, 'googlemap.png')
