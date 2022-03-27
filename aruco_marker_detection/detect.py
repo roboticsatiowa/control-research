@@ -42,3 +42,4 @@ def identify_markers():
 if __name__ == "__main__":
     generate_markers()
     identify_markers()
+    print(test)
