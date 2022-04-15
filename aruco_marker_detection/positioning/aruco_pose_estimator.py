@@ -114,11 +114,13 @@ def main():
       cv2.aruco.drawDetectedMarkers(frame, corners, marker_ids)
 
       # Get the rotation and translation vectors
+      print('test1')
       rvecs, tvecs, obj_points = cv2.aruco.estimatePoseSingleMarkers(
         corners,
         aruco_marker_side_length,
         mtx,
         dst)
+
 
       # Print the pose for the ArUco marker
       # The pose of the marker is with respect to the camera lens frame.
@@ -127,6 +129,7 @@ def main():
       # x-axis points to the right
       # y-axis points straight down towards your toes
       # z-axis points straight ahead away from your eye, out of the camera
+      print('test2')
       for i, marker_id in enumerate(marker_ids):
 
         # Store the translation (i.e. position) information
