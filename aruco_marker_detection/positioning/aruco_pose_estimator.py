@@ -12,6 +12,7 @@ import cv2 # Import the OpenCV library
 import numpy as np # Import Numpy library
 from scipy.spatial.transform import Rotation as R
 import math # Math library
+from argparse import ArgumentParser #added by CK by 4-28-22 while debugging 'argparse not defined'
 
 # Project: ArUco Marker Pose Estimator
 # Date created: 12/21/2021
@@ -42,7 +43,7 @@ ARUCO_DICT = {
 }
 
 # Side length of the ArUco marker in meters
-aruco_marker_side_length = 0.0785
+aruco_marker_side_length = 0.0500
 
 # Calibration parameters yaml file
 camera_calibration_parameters_filename = 'calibration_chessboard.yaml'
@@ -69,15 +70,22 @@ def euler_from_quaternion(x, y, z, w):
 
   return roll_x, pitch_y, yaw_z # in radians
 
+ # def calculate_distance(pixel_height, focal_length):
+ #
+ #     return distance_cm
+
+
+
+
 def main():
   """
   Main method of the program.
   """
   # Check that we have a valid ArUco marker
-  if ARUCO_DICT.get(aruco_dictionary_name, None) is None:
-    print("[INFO] ArUCo tag of '{}' is not supported".format(
-      args["type"]))
-    sys.exit(0)
+  # if ARUCO_DICT.get(aruco_dictionary_name, None) is None:
+  #   print("[INFO] ArUCo tag of '{}' is not supported".format(
+  #     args["type"]))
+  #   sys.exit(0)
 
   # Load the camera parameters from the saved file
   cv_file = cv2.FileStorage(
@@ -107,6 +115,19 @@ def main():
       frame, this_aruco_dictionary, parameters=this_aruco_parameters,
       cameraMatrix=mtx, distCoeff=dst)
 
+    # cv2 arcLength function calculates distance
+    if corners:
+        aruco_perimeter = cv2.arcLength(corners[0][0], True) #added 4-28-22 by CK
+        print("ARC LENGTH: ", aruco_perimeter)
+        print("Corners: ", corners)
+        # calculate_distance(aruco_perimeter, 12)
+        focal_length = 12
+        pixel_height = aruco_perimeter
+        distance_mm = (focal_length*50 * 1080) / (pixel_height*11)
+        distance_cm = distance_mm / 10
+        print("Distance: ", distance_cm)
+
+
     # Check that at least one ArUco marker was detected
     if marker_ids is not None:
 
@@ -114,7 +135,7 @@ def main():
       cv2.aruco.drawDetectedMarkers(frame, corners, marker_ids)
 
       # Get the rotation and translation vectors
-      print('test1')
+      # print('test1')
       rvecs, tvecs, obj_points = cv2.aruco.estimatePoseSingleMarkers(
         corners,
         aruco_marker_side_length,
@@ -129,7 +150,7 @@ def main():
       # x-axis points to the right
       # y-axis points straight down towards your toes
       # z-axis points straight ahead away from your eye, out of the camera
-      print('test2')
+      # print('test2')
       for i, marker_id in enumerate(marker_ids):
 
         # Store the translation (i.e. position) information
@@ -168,6 +189,11 @@ def main():
 
         # Draw the axes on the marker
         cv2.aruco.drawAxis(frame, mtx, dst, rvecs[i], tvecs[i], 0.05)
+        # ap = ArgumentParser()
+        #
+        # ap.add_argument('-t', '-type', required=True,
+        # help= 'tag of the marker to b detected')
+        # args = vars(ap.parse_args())
 
     # Display the resulting frame
     cv2.imshow('frame',frame)
@@ -180,6 +206,10 @@ def main():
   # Close down the video stream
   cap.release()
   cv2.destroyAllWindows()
+
+
+
+
 
 if __name__ == '__main__':
   print(__doc__)
