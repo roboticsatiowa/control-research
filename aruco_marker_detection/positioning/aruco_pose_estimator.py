@@ -78,7 +78,7 @@ def euler_from_quaternion(x, y, z, w):
 
 def screenshot():
   myScreenshot = pyautogui.screenshot()
-  myScreenshot.save(r'Desktop \ filename.png')
+  myScreenshot.save(r'Desktop \ aruco.png')
   
 
 
