@@ -13,6 +13,7 @@ import numpy as np # Import Numpy library
 from scipy.spatial.transform import Rotation as R
 import math # Math library
 from argparse import ArgumentParser #added by CK by 4-28-22 while debugging 'argparse not defined'
+import pyautogui
 
 # Project: ArUco Marker Pose Estimator
 # Date created: 12/21/2021
@@ -75,7 +76,13 @@ def euler_from_quaternion(x, y, z, w):
  #     return distance_cm
 
 
+def screenshot():
+  myScreenshot = pyautogui.screenshot()
+  myScreenshot.save(r'Desktop \ filename.png')
+  
 
+
+    
 
 def main():
   """
@@ -142,6 +149,9 @@ def main():
         aruco_marker_side_length,
         mtx,
         dst)
+
+      # take screenshot of marker
+      screenshot()
 
 
       # Print the pose for the ArUco marker
