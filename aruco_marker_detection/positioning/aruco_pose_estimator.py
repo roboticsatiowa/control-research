@@ -139,6 +139,7 @@ def main():
     if marker_ids is not None:
 
       # Draw a square around detected markers in the video frame
+    
       cv2.aruco.drawDetectedMarkers(frame, corners, marker_ids)
 
       # Get the rotation and translation vectors
