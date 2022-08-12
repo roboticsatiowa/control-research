@@ -20,11 +20,27 @@ import pyautogui
 # Python version: 3.8
 
 # Dictionary that was used to generate the ArUco marker
-aruco_dictionary_name = "DICT_4X4_50"
+aruco_dictionary_name = "DICT_ARUCO_ORIGINAL"
 
 # The different ArUco dictionaries built into the OpenCV library.
 ARUCO_DICT = {
-  "DICT_4X4_50": cv2.aruco.DICT_4X4_50,
+  "DICT_4X4_50": cv2.aruco.DICT_4X4_50, # CIRC DICT
+  # "DICT_4X4_100": cv2.aruco.DICT_4X4_100,
+  # "DICT_4X4_250": cv2.aruco.DICT_4X4_250,
+  # "DICT_4X4_1000": cv2.aruco.DICT_4X4_1000,
+  # "DICT_5X5_50": cv2.aruco.DICT_5X5_50,
+  # "DICT_5X5_100": cv2.aruco.DICT_5X5_100,
+  # "DICT_5X5_250": cv2.aruco.DICT_5X5_250,
+  # "DICT_5X5_1000": cv2.aruco.DICT_5X5_1000,
+  # "DICT_6X6_50": cv2.aruco.DICT_6X6_50,
+  # "DICT_6X6_100": cv2.aruco.DICT_6X6_100,
+  # "DICT_6X6_250": cv2.aruco.DICT_6X6_250,
+  # "DICT_6X6_1000": cv2.aruco.DICT_6X6_1000,
+  # "DICT_7X7_50": cv2.aruco.DICT_7X7_50,
+  # "DICT_7X7_100": cv2.aruco.DICT_7X7_100,
+  # "DICT_7X7_250": cv2.aruco.DICT_7X7_250,
+  # "DICT_7X7_1000": cv2.aruco.DICT_7X7_1000,
+  # "DICT_ARUCO_ORIGINAL": cv2.aruco.DICT_ARUCO_ORIGINAL
 }
 
 # Side length of the ArUco marker in meters
@@ -62,7 +78,7 @@ def euler_from_quaternion(x, y, z, w):
 
 def screenshot():
   myScreenshot = pyautogui.screenshot()
-  myScreenshot.save(r'Desktop \ filename.png')
+  myScreenshot.save(r'Desktop \ aruco.png')
   
 
 
@@ -88,7 +104,7 @@ def main():
   # Load the ArUco dictionary
   print("[INFO] detecting '{}' markers...".format(
     aruco_dictionary_name))
-  this_aruco_dictionary = cv2.aruco.Dictionary_get(ARUCO_DICT["DICT_4X4_50"])
+  this_aruco_dictionary = cv2.aruco.Dictionary_get(ARUCO_DICT["DICT_4X4_50"]) # Changed to working dictionary, formerly aruco_dictionary_name
   this_aruco_parameters = cv2.aruco.DetectorParameters_create()
 
   # Start the video stream
@@ -105,7 +121,6 @@ def main():
     (corners, marker_ids, rejected) = cv2.aruco.detectMarkers(
       frame, this_aruco_dictionary, parameters=this_aruco_parameters,
       cameraMatrix=mtx, distCoeff=dst)
-
     # cv2 arcLength function calculates distance
     if corners:
         aruco_perimeter = cv2.arcLength(corners[0][0], True) #added 4-28-22 by CK
@@ -125,7 +140,7 @@ def main():
       # Draw a square around detected markers in the video frame
     
       cv2.aruco.drawDetectedMarkers(frame, corners, marker_ids)
-      print(marker_ids)
+      print("Marker ID: ", marker_ids)
 
       # Get the rotation and translation vectors
       # print('test1')
