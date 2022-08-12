@@ -1,9 +1,9 @@
 from __future__ import print_function # Python 2/3 compatibility
 import cv2 # Import the OpenCV library
-import numpy as np # Import Numpy library
-from scipy.spatial.transform import Rotation as R
-import math # Math library
-from argparse import ArgumentParser #added by CK by 4-28-22 while debugging 'argparse not defined'
+# import numpy as np # Import Numpy library
+# from scipy.spatial.transform import Rotation as R
+# import math # Math library
+# from argparse import ArgumentParser #added by CK by 4-28-22 while debugging 'argparse not defined'
 import pyautogui
 
 ARUCO_DICT = {
@@ -56,17 +56,6 @@ def main():
     (corners, marker_ids, rejected) = cv2.aruco.detectMarkers(
       frame, this_aruco_dictionary, parameters=this_aruco_parameters,
       cameraMatrix=mtx, distCoeff=dst)
-    # cv2 arcLength function calculates distance
-    if corners:
-        aruco_perimeter = cv2.arcLength(corners[0][0], True) #added 4-28-22 by CK
-        print("ARC LENGTH: ", aruco_perimeter)
-        print("Corners: ", corners)
-        # calculate_distance(aruco_perimeter, 12)
-        focal_length = 12
-        pixel_height = aruco_perimeter
-        distance_mm = (focal_length * 50 * 1080) / (pixel_height*11)
-        distance_cm = distance_mm / 10
-        print("Distance: ", distance_cm)
 
 
     # Check that at least one ArUco marker was detected
