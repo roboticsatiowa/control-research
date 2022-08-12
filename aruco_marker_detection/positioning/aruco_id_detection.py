@@ -16,7 +16,7 @@ aruco_marker_side_length = 0.0500
 camera_calibration_parameters_filename = 'calibration_chessboard.yaml'
 def screenshot(marker_ids):
   myScreenshot = pyautogui.screenshot()
-  filename = "Marker ID: "+ marker_ids
+  filename = "Marker ID: "+ str(marker_ids) + '.png'
   print('running')
   myScreenshot.save(filename)
 
@@ -31,15 +31,15 @@ def main():
   codec = cv2.VideoWriter_fourcc(*"XVID")
   
 # Specify name of Output file
-  filename = "Recording.avi"
+  #filename = "Recording.mov"
   
 # Specify frames rate. We can choose any 
 # value and experiment with it
-  fps = 60.0
+  fps = 1
   
   
 # Creating a VideoWriter object
-  out = cv2.VideoWriter(filename, codec, fps, resolution)
+  # out = cv2.VideoWriter(filename, codec, fps, resolution)
   
 # Create an Empty window
   cv2.namedWindow("Live", cv2.WINDOW_NORMAL)
@@ -68,12 +68,12 @@ def main():
       cameraMatrix=mtx, distCoeff=dst)
     if marker_ids is not None:
       print("Marker ID: ", marker_ids)
-      screenshot(marker_ids)
+      cv2.imwrite("Marker_ID_"+str(marker_ids)+".jpg", frame)
     # Write it to the output file
     #out.write(frame)
       
     # Optional: Display the recording screen
-    cv2.imshow('Live', frame)
+    #cv2.imshow('Live', frame)
       
     # Stop recording when we press 'q'
     if cv2.waitKey(1) == ord('q'):
