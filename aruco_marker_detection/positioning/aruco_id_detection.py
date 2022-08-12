@@ -53,9 +53,12 @@ def main():
     ret, frame = cap.read()
 
     # Detect ArUco markers in the video frame
+
     (corners, marker_ids, rejected) = cv2.aruco.detectMarkers(
       frame, this_aruco_dictionary, parameters=this_aruco_parameters,
       cameraMatrix=mtx, distCoeff=dst)
+      
+    '''
     # cv2 arcLength function calculates distance
     if corners:
         aruco_perimeter = cv2.arcLength(corners[0][0], True) #added 4-28-22 by CK
@@ -67,7 +70,7 @@ def main():
         distance_mm = (focal_length * 50 * 1080) / (pixel_height*11)
         distance_cm = distance_mm / 10
         print("Distance: ", distance_cm)
-
+        '''
 
     # Check that at least one ArUco marker was detected
     if marker_ids is not None:
@@ -75,31 +78,35 @@ def main():
       # Draw a square around detected markers in the video frame
     
       cv2.aruco.drawDetectedMarkers(frame, corners, marker_ids)
+      print("Should screenshot")
+      screenshot()
       print("Marker ID: ", marker_ids)
+    
 
       # Get the rotation and translation vectors
       # print('test1')
+      '''
       rvecs, tvecs, obj_points = cv2.aruco.estimatePoseSingleMarkers(
         corners,
         aruco_marker_side_length,
         mtx,
         dst)
 
-      # take screenshot of marker
-      screenshot()
+    
 
     # Display the resulting frame
     cv2.imshow('frame',frame)
+    '''
 
     # If "q" is pressed on the keyboard,
     # exit this loop
     if cv2.waitKey(1) & 0xFF == ord('q'):
       break
-
+"""
   # Close down the video stream
   cap.release()
   cv2.destroyAllWindows()
-
+"""
 
 
 
