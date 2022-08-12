@@ -123,7 +123,7 @@ def main():
         # calculate_distance(aruco_perimeter, 12)
         focal_length = 12
         pixel_height = aruco_perimeter
-        distance_mm = (focal_length*50 * 1080) / (pixel_height*11)
+        distance_mm = (focal_length * 50 * 1080) / (pixel_height*11)
         distance_cm = distance_mm / 10
         print("Distance: ", distance_cm)
 
