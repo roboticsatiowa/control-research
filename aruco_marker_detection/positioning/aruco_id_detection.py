@@ -1,24 +1,27 @@
 from __future__ import print_function # Python 2/3 compatibility
 import cv2 # Import the OpenCV library
 import numpy as np # Import Numpy library
+import pathlib
+import os
+from datetime import datetime
 # from scipy.spatial.transform import Rotation as R
 # import math # Math library
 # from argparse import ArgumentParser #added by CK by 4-28-22 while debugging 'argparse not defined'
 import pyautogui
 # Side length of the ArUco marker in meters
+now = datetime.now()
+currentTime = now.strftime("%D:%H:%M,%S")
+print(currentTime)
+new_dir = pathlib.Path("aruco_images" + currentTime)
+new_dir.mkdir(parents = True, exist_ok = True)
 aruco_dictionary_name = "DICT_ARUCO_ORIGINAL"
 ARUCO_DICT = {
-    "DICT_4X4_50": cv2.aruco.DICT_4X4_50
+	"DICT_4X4_50": cv2.aruco.DICT_4X4_50
 }
 aruco_marker_side_length = 0.0500
 
 # Calibration parameters yaml file
 camera_calibration_parameters_filename = 'calibration_chessboard.yaml'
-def screenshot(marker_ids):
-  myScreenshot = pyautogui.screenshot()
-  filename = "Marker ID: "+ str(marker_ids) + '.png'
-  print('running')
-  myScreenshot.save(filename)
 
 def main():
   
@@ -30,22 +33,22 @@ def main():
 # Specify video codec
   codec = cv2.VideoWriter_fourcc(*"XVID")
   
-# Specify name of Output file
-  #filename = "Recording.mov"
+#1 Specify name of Output file
+#2  #filename = "Recording.mov"
   
-# Specify frames rate. We can choose any 
-# value and experiment with it
+#3 Specify frames rate. We can choose any 
+#4 value and experiment with it
   fps = 1
   
   
-# Creating a VideoWriter object
-  # out = cv2.VideoWriter(filename, codec, fps, resolution)
+#8 Creating a VideoWriter object
+#9  # out = cv2.VideoWriter(filename, codec, fps, resolution)
   
-# Create an Empty window
-  cv2.namedWindow("Live", cv2.WINDOW_NORMAL)
+#11 Create an Empty window
+  #cv2.namedWindow("Live", cv2.WINDOW_NORMAL)
   
-# Resize this window
-  cv2.resizeWindow("Live", 480, 270)
+#13 Resize this window
+ # cv2.resizeWindow("Live", 480, 270)
   cv_file = cv2.FileStorage(
     camera_calibration_parameters_filename, cv2.FILE_STORAGE_READ)
   mtx = cv_file.getNode('K').mat()
@@ -62,13 +65,22 @@ def main():
   
     # Convert it from BGR(Blue, Green, Red) to
     # RGB(Red, Green, Blue)
+    
     frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
     (corners, marker_ids, rejected) = cv2.aruco.detectMarkers(
-      frame, this_aruco_dictionary, parameters=this_aruco_parameters,
-      cameraMatrix=mtx, distCoeff=dst)
+      frame, this_aruco_dictionary, parameters=this_aruco_parameters)
+    
+    
     if marker_ids is not None:
-      print("Marker ID: ", marker_ids)
-      cv2.imwrite("Marker_ID_"+str(marker_ids)+".jpg", frame)
+
+        print("Marker ID: ", str(marker_ids[0][0]))
+        path = "aruco_images" + currentTime
+        cv2.imwrite(os.path.join(path, "Marker_ID_"+str(marker_ids[0][0])+".jpg"), frame)
+    
+    else:
+    	print(marker_ids)
+    	continue
+    marker_ids = None
     # Write it to the output file
     #out.write(frame)
       
