@@ -2,6 +2,18 @@
 
 All software in development. See [main repo](https://github.com/roboticsatiowa/UIRobotics) for code deployed on rover.
 
+### Installing Dependencies
+1. First clone the repo
+2. All dependencies can be found in the requirements.txt file. You can install these dependencies in the terminal with
+```
+pip install -r requirements.txt
+```
+or 
+```
+pip3 install -r requirements.txt
+```
+for python version 3
+
 ### GUI
 1. PyQt GUI with basic operations, camera feeds, and GPS with map readout
 2. Record data from camera, GPS, and science system
