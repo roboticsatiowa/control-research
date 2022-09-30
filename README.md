@@ -3,7 +3,8 @@
 All software in development. See [main repo](https://github.com/roboticsatiowa/UIRobotics) for code deployed on rover.
 
 ### Installing Dependencies
-All dependencies can be found in the requirements.txt file. You can install these dependencies in the terminal with
+1. First clone the repo
+2. All dependencies can be found in the requirements.txt file. You can install these dependencies in the terminal with
 ```
 pip install -r requirements.txt
 ```
