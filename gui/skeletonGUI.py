@@ -242,10 +242,13 @@ class Window(QMainWindow):
 
     #slider value change method
     def sliderValueChanged(self):
-        self.getMapImage(self.latitude, self.longitude, self.slider.value())
-        self.label3.clear()
-        GPSpixmap = QPixmap('googlemap.png')
-        self.label3.setPixmap(GPSpixmap)
+        try:
+            self.getMapImage(self.latitude, self.longitude, self.slider.value())
+            self.label3.clear()
+            GPSpixmap = QPixmap('googlemap.png')
+            self.label3.setPixmap(GPSpixmap)
+        except:
+            print("Error Retrieving Map")
 
     def start_action(self):
 		# making flag true
