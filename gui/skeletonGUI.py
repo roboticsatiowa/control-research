@@ -13,7 +13,7 @@ class Window(QMainWindow):
 
     def __init__(self):
     	super().__init__()
-
+     
     	# setting title
     	self.setWindowTitle("Rover GUI")
 
@@ -25,7 +25,6 @@ class Window(QMainWindow):
 
     	# showing all the widgets
     	self.show()
-
     #def valuechange(slider, self):
      #   sliderLabel = QLabel()
       #  sliderLabel.setGeometry(700, 650, 10, 10)
@@ -35,7 +34,7 @@ class Window(QMainWindow):
 
     def getMapImage(self, lat, lng, zoom):
         urlbase = "http://maps.google.com/maps/api/staticmap?"
-        GOOGLEAPIKEY = "AIzaSyCHD0L-s_gWE6VTNumgn1TMCEhiDTEok_U"
+        GOOGLEAPIKEY = "AIzaSyDe8dVe6NnHsd-DK6MXnj5hb5sZGFkZJp8"
         args = "center={},{}&zoom={}&size={}x{}&format=gif&maptype={}&markers=color:red|size:small|{},{}|".format(lat,lng,zoom,400,400,"hybrid",lat,lng)
         args = args + "&key=" + GOOGLEAPIKEY
         mapURL = urlbase+args
@@ -50,8 +49,8 @@ class Window(QMainWindow):
     	# variables
     	# count variable
         self.count = 0
-        self.latitude = 41.6
-        self.longitude = -91.5
+        self.latitude = 41.702389
+        self.longitude = -91.582108
 
     	# start flag
         self.start = False
@@ -283,4 +282,4 @@ App = QApplication(sys.argv)
 window = Window()
 
 # start the app
-sys.exit(App.exec())
+sys.exit(App.exec_())
