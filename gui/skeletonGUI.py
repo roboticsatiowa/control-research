@@ -38,7 +38,7 @@ class Window(QMainWindow):
     def getMapImage(self, lat, lng, zoom):
         urlbase = "http://maps.google.com/maps/api/staticmap?"
         GOOGLEAPIKEY = MAP_API_KEY # Liao's personal api key, must get new one if expired
-        args = "center={},{}&zoom={}&size={}x{}&format=gif&maptype={}&markers=color:red|size:small|{},{}|".format(lat,lng,zoom,400,400,"hybrid",lat,lng)
+        args = "center={},{}&zoom={}&size={}x{}&format=gif&maptype={}&markers=color:red|size:small|{},{}|{},{}|".format(lat,lng,zoom,400,400,"roadmap",lat,lng, self.latitudeSecond, self.longitudeSecond)
         args = args + "&key=" + GOOGLEAPIKEY
         mapURL = urlbase+args
         urlretrieve(mapURL, 'googlemap.png')
@@ -54,6 +54,9 @@ class Window(QMainWindow):
         self.count = 0
         self.latitude = 41.702389 # luke's house latitude
         self.longitude = -91.582108 # luke's house longitude
+        
+        self.latitudeSecond = 41.703
+        self.longitudeSecond = -91.59
 
     	# start flag
         self.start = False
