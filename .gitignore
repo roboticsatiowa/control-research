@@ -1,2 +1,4 @@
 **/__pycache__/
 **/.DS_Store
+virt/
+gui/secret_key.py
