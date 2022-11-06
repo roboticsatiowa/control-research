@@ -9,7 +9,7 @@ from urllib.request import urlopen, urlretrieve
 import sys
 
 #get api key
-from secret_key import MAP_API_KEY
+MAP_API_KEY = "AIzaSyAhRa4yO8p6r-jKl7h7NQ3zSN4Iqn9O4ng"
 
 #commit comment
 class Window(QMainWindow):
