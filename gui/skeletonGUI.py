@@ -1,9 +1,9 @@
 # importing libraries
-from PyQt5.QtWidgets import *
-from PyQt5.QtWidgets import QApplication, QLabel, QPushButton, QSlider, QInputDialogue
-from PyQt5 import QtCore, QtGui
+from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5 import Qt
+from PyQt5.QtWidgets import QApplication, QLabel, QPushButton, QSlider, QInputDialog, QMainWindow
 from PyQt5.QtGui import *
-from PyQt5.QtGui import QIcon, QPixmap, QMainWindow, QFont
+from PyQt5.QtGui import QIcon, QPixmap, QFont
 from PyQt5.QtCore import QTimer
 from urllib.request import urlopen, urlretrieve
 import sys
@@ -37,7 +37,7 @@ class Window(QMainWindow):
 
     def getMapImage(self, lat, lng, zoom):
         urlbase = "http://maps.google.com/maps/api/staticmap?"
-        GOOGLEAPIKEY = "AIzaSyAhRa4yO8p6r-jKl7h7NQ3zSN4Iqn9O4ng"
+        GOOGLEAPIKEY = 'AIzaSyCOZPpgk37DJCQstaqwhI1Wmd09aE1R48k'
         args = "center={},{}&zoom={}&size={}x{}&format=gif&maptype={}&markers=color:red|size:small|{},{}|{},{}|".format(lat,lng,zoom,400,400,"roadmap",lat,lng, self.latitudeSecond, self.longitudeSecond)
         args = args + "&key=" + GOOGLEAPIKEY
         mapURL = urlbase+args
@@ -82,21 +82,21 @@ class Window(QMainWindow):
         label1.setGeometry(50, 50,400,300)
         label1.setStyleSheet("border: 3px solid orange")
         label1.setFont(QFont('Arial', 15))
-        label1.setAlignment(Qt.AlignCenter)
+        label1.setAlignment(QtCore.Qt.AlignCenter)
 
         label2 = QLabel("Camera Feed 2", self)
         label2.setGeometry(550, 50, 400, 300)
         label2.setStyleSheet("border: 3px solid orange")
         label2.setFont(QFont('Arial', 15))
-        label2.setAlignment(Qt.AlignCenter)
+        label2.setAlignment(QtCore.Qt.AlignCenter)
 
 
         # GPS Container
-        # label3 = QLabel("GPS", self)
-        # label3.setGeometry(700, 400, 200,200)
-        # label3.setStyleSheet("border: 3px solid orange")  #<---- Do we even need this block of code? - Liao
-        # label3.setFont(QFont('Arial', 15))
-        # label3.setAlignment(Qt.AlignCenter)
+        label3 = QLabel("GPS", self)
+        label3.setGeometry(700, 400, 200,200)
+        label3.setStyleSheet("border: 3px solid orange")  #<---- Do we even need this block of code? - Liao
+        label3.setFont(QFont('Arial', 15))
+        label3.setAlignment(QtCore.Qt.AlignCenter)
 
         # GPS container but at the same time, handles slider value change
         self.label3 = QLabel("GPS", self)
@@ -109,7 +109,7 @@ class Window(QMainWindow):
         # styling of gps field
         self.label3.setStyleSheet("border: 3px solid orange")
         self.label3.setFont(QFont('Arial', 15))
-        self.label3.setAlignment(Qt.AlignCenter)
+        self.label3.setAlignment(QtCore.Qt.AlignCenter)
         
         # ===== Not too sure what these two lines do - Liao =====
         # gpsGeomoetry = self.geometry().bottomRight() - label3.geometry().bottomRight() - QPoint(100, 100)
@@ -125,7 +125,7 @@ class Window(QMainWindow):
         self.label.setGeometry(340, 470, 300, 50)
         self.label.setStyleSheet("border : 3px solid black")
         self.label.setFont(QFont('Arial', 15))
-        self.label.setAlignment(Qt.AlignCenter)
+        self.label.setAlignment(QtCore.Qt.AlignCenter)
 
     	# creating start button
         start_button = QPushButton("Start", self)
@@ -177,7 +177,7 @@ class Window(QMainWindow):
         longitudeButton.setFont(QFont('Arial', 11))
 
         # Creating slider
-        self.slider = QSlider(Qt.Horizontal, self)
+        self.slider = QSlider(QtCore.Qt.Horizontal, self)
         self.slider.setMinimum(1)
         self.slider.setMaximum(24)
         self.slider.setValue(12)
