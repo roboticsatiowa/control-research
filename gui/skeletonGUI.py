@@ -1,15 +1,15 @@
 # importing libraries
 from PyQt5.QtWidgets import *
-from PyQt5.QtWidgets import QApplication
+from PyQt5.QtWidgets import QApplication, QLabel, QPushButton, QSlider, QInputDialogue
 from PyQt5 import QtCore, QtGui
 from PyQt5.QtGui import *
-from PyQt5.QtGui import QIcon, QPixmap
-from PyQt5.QtCore import *
+from PyQt5.QtGui import QIcon, QPixmap, QMainWindow, QFont
+from PyQt5.QtCore import QTimer
 from urllib.request import urlopen, urlretrieve
 import sys
 
 #get api key
-from secret_key import MAP_API_KEY
+#from secret_key import MAP_API_KEY
 
 #commit comment
 class Window(QMainWindow):
@@ -37,7 +37,7 @@ class Window(QMainWindow):
 
     def getMapImage(self, lat, lng, zoom):
         urlbase = "http://maps.google.com/maps/api/staticmap?"
-        GOOGLEAPIKEY = MAP_API_KEY # Liao's personal api key, must get new one if expired
+        GOOGLEAPIKEY = "AIzaSyAhRa4yO8p6r-jKl7h7NQ3zSN4Iqn9O4ng"
         args = "center={},{}&zoom={}&size={}x{}&format=gif&maptype={}&markers=color:red|size:small|{},{}|{},{}|".format(lat,lng,zoom,400,400,"roadmap",lat,lng, self.latitudeSecond, self.longitudeSecond)
         args = args + "&key=" + GOOGLEAPIKEY
         mapURL = urlbase+args
