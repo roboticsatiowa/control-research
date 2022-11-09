@@ -9,7 +9,7 @@ from urllib.request import urlopen, urlretrieve
 import sys
 
 #get api key
-from secret_key import MAP_API_KEY
+MAP_API_KEY = "AIzaSyAhRa4yO8p6r-jKl7h7NQ3zSN4Iqn9O4ng"
 
 #commit comment
 class Window(QMainWindow):
@@ -37,7 +37,7 @@ class Window(QMainWindow):
 
     def getMapImage(self, lat, lng, zoom):
         urlbase = "http://maps.google.com/maps/api/staticmap?"
-        GOOGLEAPIKEY = MAP_API_KEY # Liao's personal api key, must get new one if expired
+        GOOGLEAPIKEY = "AIzaSyCOZPpgk37DJCQstaqwhI1Wmd09aE1R48k" # Liao's personal api key, must get new one if expired
         args = "center={},{}&zoom={}&size={}x{}&format=gif&maptype={}&markers=color:red|size:small|{},{}|{},{}|".format(lat,lng,zoom,400,400,"roadmap",lat,lng, self.latitudeSecond, self.longitudeSecond)
         args = args + "&key=" + GOOGLEAPIKEY
         mapURL = urlbase+args
