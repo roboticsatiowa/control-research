@@ -115,10 +115,11 @@ class Window(QMainWindow):
         # gpsGeomoetry = self.geometry().bottomRight() - label3.geometry().bottomRight() - QPoint(100, 100)
         # label3.move(gpsGeomoetry)
 
+        # ===== WE DON'T NEED THIS ANYMORE - Liao =====
     	# creating push button to get time in seconds
-        button = QPushButton("Set time", self)
-        button.setGeometry(325, 530, 150, 50)
-        button.clicked.connect(self.get_seconds)
+        # button = QPushButton("Set time", self)
+        # button.setGeometry(325, 530, 150, 50)
+        # button.clicked.connect(self.get_seconds)
 
     	# creating label to show the seconds
         self.label = QLabel("00:00", self)
@@ -128,9 +129,9 @@ class Window(QMainWindow):
         self.label.setAlignment(Qt.AlignCenter)
 
     	# creating start button
-        start_button = QPushButton("Start", self)
-        start_button.setGeometry(500, 530, 150, 50)
-        start_button.clicked.connect(self.start_action)
+        self.start_button = QPushButton("Set Time", self)
+        self.start_button.setGeometry(415, 530, 150, 50)
+        self.start_button.clicked.connect(self.start_action)
 
         # creating pause button
         pause_button = QPushButton("Pause", self)
@@ -205,7 +206,9 @@ class Window(QMainWindow):
 
 		# checking if flag is true
         if self.start:
-			# incrementing the counter
+            self.start_button.setText("Running...")
+            
+			# decrementing the counter
             self.count -= 1
 
 			# timer is completed
@@ -216,6 +219,9 @@ class Window(QMainWindow):
 
 				# setting text to the label
                 self.label.setText("Finished")
+                
+                # reset start button to it's og text
+                self.start_button.setText("Set Time")
 
         if self.start:
 			# getting text from count
@@ -286,6 +292,18 @@ class Window(QMainWindow):
 		# count = 0
         if self.count == 0:
             self.start = False
+            second, done = QInputDialog.getInt(self, 'Seconds', 'Enter Seconds:')
+
+            # if flag is true
+            if done:
+                # changing start button text to reflect it's ready to start counting
+                self.start_button.setText("Start")
+                # changing the value of count
+                self.count = second * 10
+
+                # setting text to the label
+
+                self.label.setText(str(second))
 
     def pause_action(self):
 
@@ -302,6 +320,9 @@ class Window(QMainWindow):
 
 		# setting label text
         self.label.setText("00:00")
+        
+        # reset start button text
+        self.start_button.setText("Set Time")
 
 
 
