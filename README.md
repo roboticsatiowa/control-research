@@ -1,6 +1,6 @@
 # Control Team Research
 
-## Git Pull Before Each Time Por Favor
+### Git Pull Before Each Session Por Favor
 
 All software in development. See [main repo](https://github.com/roboticsatiowa/UIRobotics) for code deployed on rover.
 
