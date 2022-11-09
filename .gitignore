@@ -3,3 +3,4 @@
 virt/
 gui/secret_key.py
 gui/googlemap.png
+.gitignore
