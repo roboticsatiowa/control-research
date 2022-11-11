@@ -310,6 +310,7 @@ class Window(QMainWindow):
 
 		# making flag false
         self.start = False
+        self.start_button.setText("Start")
 
     def reset_action(self):
 
