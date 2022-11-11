@@ -12,7 +12,6 @@ import sys
 #get api key
 # MAP_API_KEY = "AIzaSyAhRa4yO8p6r-jKl7h7NQ3zSN4Iqn9O4ng"
 
-#commit comment
 class Window(QMainWindow):
     def __init__(self):
         super().__init__()
@@ -39,7 +38,7 @@ class Window(QMainWindow):
     def getMapImage(self, lat, lng, zoom):
         urlbase = "http://maps.google.com/maps/api/staticmap?"
         GOOGLEAPIKEY = MAP_API_KEY # Liao's personal api key, must get new one if expired
-        args = "center={},{}&zoom={}&size={}x{}&format=gif&maptype={}&markers=color:red|size:small|{},{}|{},{}|".format(lat,lng,zoom,400,400,"roadmap",lat,lng, self.latitudeSecond, self.longitudeSecond)
+        args = "center={},{}&zoom={}&size={}x{}&format=gif&maptype={}&markers=color:red|size:small|{},{}|{},{}|".format(lat,lng,zoom,400,400,"satellite",lat,lng, self.latitudeSecond, self.longitudeSecond)
         args = args + "&key=" + GOOGLEAPIKEY
         mapURL = urlbase+args
         urlretrieve(mapURL, 'googlemap.png')
@@ -101,7 +100,7 @@ class Window(QMainWindow):
 
         # GPS container but at the same time, handles slider value change
         self.label3 = QLabel("GPS", self)
-        self.label3.setGeometry(700, 400, 200,200)
+        self.label3.setGeometry(700, 400, 250,250)
         # displays default coordinate location on load
         self.getMapImage(self.latitude, self.longitude, 12)
         # self.label3.clear()
@@ -168,15 +167,28 @@ class Window(QMainWindow):
 
         #creating latitude input text box
         latitudeButton = QPushButton("Set Latitude", self)
-        latitudeButton.setGeometry(700, 650, 100, 50)
+        latitudeButton.setGeometry(720, 670, 100, 50)
         latitudeButton.clicked.connect(self.getLatitude)
         latitudeButton.setFont(QFont('Arial', 11))
 
         #creating longitude input text box
         longitudeButton = QPushButton("Set Longitude", self)
-        longitudeButton.setGeometry(800, 650, 100, 50)
+        longitudeButton.setGeometry(825, 670, 100, 50)
         longitudeButton.clicked.connect(self.getLongitude)
         longitudeButton.setFont(QFont('Arial', 11))
+
+        #creating latitude input text box
+        latitudeButton2 = QPushButton("Set Latitude2", self)
+        latitudeButton2.setGeometry(720, 720, 100, 50)
+        latitudeButton2.clicked.connect(self.getLatitude)
+        latitudeButton2.setFont(QFont('Arial', 11))
+
+        #creating longitude input text box
+        longitudeButton2 = QPushButton("Set Longitude2", self)
+        longitudeButton2.setGeometry(825, 720, 100, 50)
+        longitudeButton2.clicked.connect(self.getLongitude)
+        longitudeButton2.setFont(QFont('Arial', 11))
+    
 
         # Creating slider
         self.slider = QSlider(Qt.Horizontal, self)
@@ -185,7 +197,7 @@ class Window(QMainWindow):
         self.slider.setValue(12)
         self.slider.setTickPosition(QSlider.TicksBelow)
         self.slider.setTickInterval(1)
-        self.slider.setGeometry(700, 600, 200, 50)
+        self.slider.setGeometry(725, 640, 200, 50)
         self.slider.valueChanged.connect(self.sliderValueChanged)
 
 
@@ -294,8 +306,6 @@ class Window(QMainWindow):
         if self.count == 0:
             self.start = False
             second, done = QInputDialog.getInt(self, 'Seconds', 'Enter Seconds:', min=0)
-
-
             # if flag is true
             if done:
                 # changing start button text to reflect it's ready to start counting
