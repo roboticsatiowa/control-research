@@ -293,14 +293,18 @@ class Window(QMainWindow):
 		# count = 0
         if self.count == 0:
             self.start = False
-            second, done = QInputDialog.getInt(self, 'Seconds', 'Enter Seconds:')
+            second, done = QInputDialog.getInt(self, 'Seconds', 'Enter Seconds:', min=0)
+
 
             # if flag is true
             if done:
                 # changing start button text to reflect it's ready to start counting
                 self.start_button.setText("Start")
                 # changing the value of count
-                self.count = second * 10
+                if second < 0:
+                    self.count = second * -10
+                else:
+                    self.count = second * 10
 
                 # setting text to the label
 
