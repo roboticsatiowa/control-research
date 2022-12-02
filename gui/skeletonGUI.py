@@ -35,10 +35,10 @@ class Window(QMainWindow):
         #sliderLabel.setFont(QFont('Arial', 15))
         #sliderLabel.setAlignment(Qt.AlignCenter)
 
-    def getMapImage(self, lat, lng, zoom):
+    def getMapImage(self, lat, lng, lat2, lng2, zoom):
         urlbase = "http://maps.google.com/maps/api/staticmap?"
         GOOGLEAPIKEY = MAP_API_KEY # Liao's personal api key, must get new one if expired
-        args = "center={},{}&zoom={}&size={}x{}&format=gif&maptype={}&markers=color:blue|size:small|{},{}&markers=color:red|size:small|{},{}|".format(lat,lng,zoom,400,400,"satellite",lat,lng, self.latitudeSecond, self.longitudeSecond)
+        args = "center={},{}&zoom={}&size={}x{}&format=gif&maptype={}&markers=color:blue|size:small|{},{}&markers=color:red|size:small|{},{}|".format(lat,lng,zoom,400,400,"satellite",lat,lng, lat2, lng2)
         args = args + "&key=" + GOOGLEAPIKEY
         mapURL = urlbase+args
         urlretrieve(mapURL, 'googlemap.png')
@@ -55,8 +55,8 @@ class Window(QMainWindow):
         self.latitude = 41.702389 # luke's house latitude
         self.longitude = -91.582108 # luke's house longitude
         
-        self.latitudeSecond = 41.703
-        self.longitudeSecond = -91.59
+        self.latitude2 = 41.703
+        self.longitude2 = -91.59
 
     	# start flag
         self.start = False
@@ -102,7 +102,7 @@ class Window(QMainWindow):
         self.label3 = QLabel("GPS", self)
         self.label3.setGeometry(700, 400, 250,250)
         # displays default coordinate location on load
-        self.getMapImage(self.latitude, self.longitude, 12)
+        self.getMapImage(self.latitude, self.longitude, self.latitude2, self.longitude2, 12)
         # self.label3.clear()
         GPSpixmap = QPixmap('googlemap.png')
         self.label3.setPixmap(GPSpixmap)
@@ -180,13 +180,13 @@ class Window(QMainWindow):
         #creating latitude input text box
         latitudeButton2 = QPushButton("Set Latitude2", self)
         latitudeButton2.setGeometry(720, 720, 100, 50)
-        latitudeButton2.clicked.connect(self.getLatitude)
+        latitudeButton2.clicked.connect(self.getLatitude2)
         latitudeButton2.setFont(QFont('Arial', 11))
 
         #creating longitude input text box
         longitudeButton2 = QPushButton("Set Longitude2", self)
         longitudeButton2.setGeometry(825, 720, 100, 50)
-        longitudeButton2.clicked.connect(self.getLongitude)
+        longitudeButton2.clicked.connect(self.getLongitude2)
         longitudeButton2.setFont(QFont('Arial', 11))
     
 
@@ -269,7 +269,7 @@ class Window(QMainWindow):
     def getLatitude(self):
         self.latitude, ok = QInputDialog.getDouble(self, "Latitude", "Enter Latitude", self.latitude, -90, 90)
         if ok:
-            self.getMapImage(self.latitude, self.longitude, self.slider.value())
+            self.getMapImage(self.latitude, self.longitude, self.latitude2, self.longitude2, self.slider.value())
             self.label3.clear()
             GPSpixmap = QPixmap('googlemap.png')
             self.label3.setPixmap(GPSpixmap)
@@ -280,7 +280,29 @@ class Window(QMainWindow):
     def getLongitude(self):
         self.longitude, ok = QInputDialog.getDouble(self, "Longitude", "Enter Longitude", self.longitude, -180, 180)
         if ok:
-            self.getMapImage(self.latitude, self.longitude, self.slider.value())
+            self.getMapImage(self.latitude, self.longitude, self.latitude2, self.longitude2, self.slider.value())
+            self.label3.clear()
+            GPSpixmap = QPixmap('googlemap.png')
+            self.label3.setPixmap(GPSpixmap)
+        else:
+            pass
+    
+    #method to get latitude of 2nd waypoint
+    def getLatitude2(self):
+        self.latitude2, ok = QInputDialog.getDouble(self, "Latitude 2", "Enter Latitude", self.latitude2, -90, 90)
+        if ok:
+            self.getMapImage(self.latitude, self.longitude, self.latitude2, self.longitude2, self.slider.value())
+            self.label3.clear()
+            GPSpixmap = QPixmap('googlemap.png')
+            self.label3.setPixmap(GPSpixmap)
+        else:
+            pass
+        
+    #method to get longitude of 2nd waypoint
+    def getLongitude2(self):
+        self.longitude2, ok = QInputDialog.getDouble(self, "Longitude 2", "Enter Longitude", self.longitude2, -180, 180)
+        if ok:
+            self.getMapImage(self.latitude, self.longitude, self.latitude2, self.longitude2, self.slider.value())
             self.label3.clear()
             GPSpixmap = QPixmap('googlemap.png')
             self.label3.setPixmap(GPSpixmap)
@@ -291,7 +313,8 @@ class Window(QMainWindow):
     #slider value change method
     def sliderValueChanged(self):
         try:
-            self.getMapImage(self.latitude, self.longitude, self.slider.value())
+            self.getMapImage(self.latitude, self.longitude, self.latitude2, self.longitude2, self.slider.value())
+            # self.getMapImage(self.latitude2, self.longitude2, self.slider.value())
             self.label3.clear()
             GPSpixmap = QPixmap('googlemap.png')
             self.label3.setPixmap(GPSpixmap)
