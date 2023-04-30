@@ -12,6 +12,8 @@ import cv2 # Import the OpenCV library
 import numpy as np # Import Numpy library
 from scipy.spatial.transform import Rotation as R
 import math # Math library
+from argparse import ArgumentParser #added by CK by 4-28-22 while debugging 'argparse not defined'
+import pyautogui
 
 # Project: ArUco Marker Pose Estimator
 # Date created: 12/21/2021
@@ -22,27 +24,27 @@ aruco_dictionary_name = "DICT_ARUCO_ORIGINAL"
 
 # The different ArUco dictionaries built into the OpenCV library.
 ARUCO_DICT = {
-  "DICT_4X4_50": cv2.aruco.DICT_4X4_50,
-  "DICT_4X4_100": cv2.aruco.DICT_4X4_100,
-  "DICT_4X4_250": cv2.aruco.DICT_4X4_250,
-  "DICT_4X4_1000": cv2.aruco.DICT_4X4_1000,
-  "DICT_5X5_50": cv2.aruco.DICT_5X5_50,
-  "DICT_5X5_100": cv2.aruco.DICT_5X5_100,
-  "DICT_5X5_250": cv2.aruco.DICT_5X5_250,
-  "DICT_5X5_1000": cv2.aruco.DICT_5X5_1000,
-  "DICT_6X6_50": cv2.aruco.DICT_6X6_50,
-  "DICT_6X6_100": cv2.aruco.DICT_6X6_100,
-  "DICT_6X6_250": cv2.aruco.DICT_6X6_250,
-  "DICT_6X6_1000": cv2.aruco.DICT_6X6_1000,
-  "DICT_7X7_50": cv2.aruco.DICT_7X7_50,
-  "DICT_7X7_100": cv2.aruco.DICT_7X7_100,
-  "DICT_7X7_250": cv2.aruco.DICT_7X7_250,
-  "DICT_7X7_1000": cv2.aruco.DICT_7X7_1000,
-  "DICT_ARUCO_ORIGINAL": cv2.aruco.DICT_ARUCO_ORIGINAL
+  "DICT_4X4_50": cv2.aruco.DICT_4X4_50, # CIRC DICT
+  # "DICT_4X4_100": cv2.aruco.DICT_4X4_100,
+  # "DICT_4X4_250": cv2.aruco.DICT_4X4_250,
+  # "DICT_4X4_1000": cv2.aruco.DICT_4X4_1000,
+  # "DICT_5X5_50": cv2.aruco.DICT_5X5_50,
+  # "DICT_5X5_100": cv2.aruco.DICT_5X5_100,
+  # "DICT_5X5_250": cv2.aruco.DICT_5X5_250,
+  # "DICT_5X5_1000": cv2.aruco.DICT_5X5_1000,
+  # "DICT_6X6_50": cv2.aruco.DICT_6X6_50,
+  # "DICT_6X6_100": cv2.aruco.DICT_6X6_100,
+  # "DICT_6X6_250": cv2.aruco.DICT_6X6_250,
+  # "DICT_6X6_1000": cv2.aruco.DICT_6X6_1000,
+  # "DICT_7X7_50": cv2.aruco.DICT_7X7_50,
+  # "DICT_7X7_100": cv2.aruco.DICT_7X7_100,
+  # "DICT_7X7_250": cv2.aruco.DICT_7X7_250,
+  # "DICT_7X7_1000": cv2.aruco.DICT_7X7_1000,
+  # "DICT_ARUCO_ORIGINAL": cv2.aruco.DICT_ARUCO_ORIGINAL
 }
 
 # Side length of the ArUco marker in meters
-aruco_marker_side_length = 0.0785
+aruco_marker_side_length = 0.0500
 
 # Calibration parameters yaml file
 camera_calibration_parameters_filename = 'calibration_chessboard.yaml'
@@ -69,15 +71,28 @@ def euler_from_quaternion(x, y, z, w):
 
   return roll_x, pitch_y, yaw_z # in radians
 
+ # def calculate_distance(pixel_height, focal_length):
+ #
+ #     return distance_cm
+
+
+def screenshot():
+  myScreenshot = pyautogui.screenshot()
+  myScreenshot.save(r'Desktop \ aruco.png')
+  
+
+
+    
+
 def main():
   """
   Main method of the program.
   """
   # Check that we have a valid ArUco marker
-  if ARUCO_DICT.get(aruco_dictionary_name, None) is None:
-    print("[INFO] ArUCo tag of '{}' is not supported".format(
-      args["type"]))
-    sys.exit(0)
+  # if ARUCO_DICT.get(aruco_dictionary_name, None) is None:
+  #   print("[INFO] ArUCo tag of '{}' is not supported".format(
+  #     args["type"]))
+  #   sys.exit(0)
 
   # Load the camera parameters from the saved file
   cv_file = cv2.FileStorage(
@@ -89,7 +104,7 @@ def main():
   # Load the ArUco dictionary
   print("[INFO] detecting '{}' markers...".format(
     aruco_dictionary_name))
-  this_aruco_dictionary = cv2.aruco.Dictionary_get(ARUCO_DICT[aruco_dictionary_name])
+  this_aruco_dictionary = cv2.aruco.Dictionary_get(ARUCO_DICT["DICT_4X4_50"]) # Changed to working dictionary, formerly aruco_dictionary_name
   this_aruco_parameters = cv2.aruco.DetectorParameters_create()
 
   # Start the video stream
@@ -106,19 +121,38 @@ def main():
     (corners, marker_ids, rejected) = cv2.aruco.detectMarkers(
       frame, this_aruco_dictionary, parameters=this_aruco_parameters,
       cameraMatrix=mtx, distCoeff=dst)
+    # cv2 arcLength function calculates distance
+    if corners:
+        aruco_perimeter = cv2.arcLength(corners[0][0], True) #added 4-28-22 by CK
+        print("ARC LENGTH: ", aruco_perimeter)
+        print("Corners: ", corners)
+        # calculate_distance(aruco_perimeter, 12)
+        focal_length = 12
+        pixel_height = aruco_perimeter
+        distance_mm = (focal_length * 50 * 1080) / (pixel_height*11)
+        distance_cm = distance_mm / 10
+        print("Distance: ", distance_cm)
+
 
     # Check that at least one ArUco marker was detected
     if marker_ids is not None:
 
       # Draw a square around detected markers in the video frame
+    
       cv2.aruco.drawDetectedMarkers(frame, corners, marker_ids)
+      print("Marker ID: ", marker_ids)
 
       # Get the rotation and translation vectors
+      # print('test1')
       rvecs, tvecs, obj_points = cv2.aruco.estimatePoseSingleMarkers(
         corners,
         aruco_marker_side_length,
         mtx,
         dst)
+
+      # take screenshot of marker
+      screenshot()
+
 
       # Print the pose for the ArUco marker
       # The pose of the marker is with respect to the camera lens frame.
@@ -127,6 +161,7 @@ def main():
       # x-axis points to the right
       # y-axis points straight down towards your toes
       # z-axis points straight ahead away from your eye, out of the camera
+      # print('test2')
       for i, marker_id in enumerate(marker_ids):
 
         # Store the translation (i.e. position) information
@@ -165,6 +200,11 @@ def main():
 
         # Draw the axes on the marker
         cv2.aruco.drawAxis(frame, mtx, dst, rvecs[i], tvecs[i], 0.05)
+        # ap = ArgumentParser()
+        #
+        # ap.add_argument('-t', '-type', required=True,
+        # help= 'tag of the marker to b detected')
+        # args = vars(ap.parse_args())
 
     # Display the resulting frame
     cv2.imshow('frame',frame)
@@ -177,6 +217,10 @@ def main():
   # Close down the video stream
   cap.release()
   cv2.destroyAllWindows()
+
+
+
+
 
 if __name__ == '__main__':
   print(__doc__)
