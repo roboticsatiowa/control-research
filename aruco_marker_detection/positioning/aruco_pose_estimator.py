@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+
 
 '''
 Welcome to the ArUco Marker Pose Estimator!
@@ -7,13 +7,16 @@ This program:
   - Estimates the pose of an ArUco Marker
 '''
 
-from __future__ import print_function # Python 2/3 compatibility
-import cv2 # Import the OpenCV library
-import numpy as np # Import Numpy library
-from scipy.spatial.transform import Rotation as R
-import math # Math library
-from argparse import ArgumentParser #added by CK by 4-28-22 while debugging 'argparse not defined'
+from __future__ import print_function  # Python 2/3 compatibility
+
+import math  # Math library
+from argparse import \
+    ArgumentParser  # added by CK by 4-28-22 while debugging 'argparse not defined'
+
+import cv2  # Import the OpenCV library
+import numpy as np  # Import Numpy library
 import pyautogui
+from scipy.spatial.transform import Rotation as R
 
 # Project: ArUco Marker Pose Estimator
 # Date created: 12/21/2021
@@ -47,7 +50,7 @@ ARUCO_DICT = {
 aruco_marker_side_length = 0.0500
 
 # Calibration parameters yaml file
-camera_calibration_parameters_filename = 'calibration_chessboard.yaml'
+camera_calibration_parameters_filename = 'positioning/calibration_chessboard.yaml'
 
 def euler_from_quaternion(x, y, z, w):
   """
@@ -104,8 +107,8 @@ def main():
   # Load the ArUco dictionary
   print("[INFO] detecting '{}' markers...".format(
     aruco_dictionary_name))
-  this_aruco_dictionary = cv2.aruco.Dictionary_get(ARUCO_DICT["DICT_4X4_50"]) # Changed to working dictionary, formerly aruco_dictionary_name
-  this_aruco_parameters = cv2.aruco.DetectorParameters_create()
+  this_aruco_dictionary = cv2.aruco.getPredefinedDictionary(ARUCO_DICT["DICT_4X4_50"]) # Changed to working dictionary, formerly aruco_dictionary_name
+  this_aruco_parameters = cv2.aruco.DetectorParameters()
 
   # Start the video stream
   cap = cv2.VideoCapture(0)
@@ -224,4 +227,5 @@ def main():
 
 if __name__ == '__main__':
   print(__doc__)
+  cap = cv2.VideoCapture(0)
   main()
